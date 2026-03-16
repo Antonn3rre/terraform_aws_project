@@ -4,6 +4,8 @@ module "compute" {
   source = "../modules/compute"
   bastion_sg_id = module.network_sec.bastion_sg_id
   public_subnets = module.vpc.public_subnets
+  private_subnets = module.vpc.private_subnets
+  privates_sg_id = module.network_sec.privates_sg_id
 }
   # module.vpc.public_subnets[0]
 

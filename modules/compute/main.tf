@@ -10,7 +10,9 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# en cours
+
+## BASTION
+
 resource "aws_instance" "bastion" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.bastion_type
@@ -30,3 +32,22 @@ resource "aws_key_pair" "deployer" {
   key_name = "mon-projet-key"
   public_key = file("~/.ssh/id_ed25519.pub")
 }
+
+## PRIVATE INSTANCES
+resource "aws_instance" "private" {
+  count = 2
+
+  ami = data.aws_ami.ubuntu.id
+  instance_type = var.private_instances_type
+
+  key_name = aws_key_pair.deployer.key_name
+
+  vpc_security_group_ids = [var.privates_sg_id]
+
+  subnet_id = var.private_subnets[count.index]
+  tags = {
+    Name = "private_${count.index}"
+  }
+}
+
+

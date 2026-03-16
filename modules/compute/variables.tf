@@ -24,6 +24,23 @@ variable "public_subnets" {
   type = list(string)
   description = "List of public subnet IDs"
 }
+
+variable "private_subnets" {
+  type = list(string)
+  description = "List of private subnet IDs"
+}
+
+variable "private_instances_type" {
+  description = "The privates instances type"
+  type = string
+  default = "t3.micro"
+}
+
+variable "privates_sg_id" {
+  type = string
+}
+
+
 /*
 variable "private_instances_sg_id" {
   type = list(string)
