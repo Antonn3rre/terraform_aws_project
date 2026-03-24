@@ -40,7 +40,19 @@ variable "privates_sg_id" {
   type = string
 }
 
+## NAT
+variable  "nat_type" {
+  description = "The NAT instance's type"
+  type = string
+  default = "t3.micro"
+}
+variable "nat_sg_id" {
+  type = string
+}
 
+variable "vpc_cidr" {
+  type = string
+}
 /*
 variable "private_instances_sg_id" {
   type = list(string)

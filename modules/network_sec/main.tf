@@ -44,7 +44,53 @@ resource "aws_security_group" "private_ssh" {
     description     = "SSH from bastion host only"
   }
 
+  # for ping
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic for NAT"
+  }
+
   tags = {
     Name = "${var.project_name}-private-ssh-sg"
+  }
+}
+
+# Security group for nat instance
+resource "aws_security_group" "nat" {
+  name_prefix = "${var.project_name}-nat-"
+  vpc_id = var.vpc_id
+  description = "Allow all traffic from CIDR block"
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    cidr_blocks = [var.vpc_cidr] # Everything that comes form inside the VPC
+    protocol = "-1" # Authorize all protocols
+  }
+
+  # SSH connexion
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_groups = [aws_security_group.bastion.id]
+    description = "SSH from bastion host only"
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"] # Everything that go to the internet
+    protocol = "-1" # Authorize all protocols
   }
 }

@@ -13,3 +13,7 @@ variable "project_name" {
   description = "Projet name"
   default = "VPC AWS Terraform"
 }
+
+variable "vpc_cidr" {
+  type = string
+}

@@ -7,3 +7,9 @@ output "bastion_public_ip" {
 output "bastion_subnet_id" {
   value = module.compute.bastion_subnet_id
 }
+output "nat_public_ip" {
+  value = module.compute.nat_public_ip
+}
+output "nat_private_ip" {
+  value = module.compute.nat_private_ip
+}
