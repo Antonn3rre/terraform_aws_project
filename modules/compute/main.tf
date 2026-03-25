@@ -45,6 +45,15 @@ resource "aws_instance" "private" {
   vpc_security_group_ids = [var.privates_sg_id]
 
   subnet_id = var.private_subnets[count.index]
+
+  user_data = <<-EOF
+    #!/bin/bash
+    apt update -y && apt install -y nginx
+    echo "<h1>Hello from $(hostname)</h1>" > /var/www/html/index.html
+    systemctl start nginx.service
+    EOF
+
+
   tags = {
     Name = "private_${count.index}"
   }

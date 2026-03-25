@@ -13,3 +13,6 @@ output "nat_public_ip" {
 output "nat_private_ip" {
   value = module.compute.nat_private_ip
 }
+output "alb_url" {
+  value = module.alb.alb_url
+}

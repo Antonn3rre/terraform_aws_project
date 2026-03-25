@@ -1,6 +1,9 @@
 output "private_instances_ips" {
   value = aws_instance.private[*].private_ip
 }
+output "private_instances_ids" {
+  value = aws_instance.private[*].id
+}
 
 output "bastion_subnet_id" {
   value = aws_instance.bastion.subnet_id

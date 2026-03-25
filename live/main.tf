@@ -24,6 +24,14 @@ module "vpc" {
   aws_availability_zones_names = data.aws_availability_zones.available.names
 }
 
+module "alb" {
+  source = "../modules/alb"
+  alb_sg_id = module.network_sec.alb_sg_id
+  public_subnets = module.vpc.public_subnets
+  vpc_id = module.vpc.vpc_id
+  private_instances_ids = module.compute.private_instances_ids
+}
+
 resource "aws_route" "private_nat_route" {
   count                  = length(module.vpc.private_subnets) # Plus fiable que les IDs de table ici
   route_table_id         = module.vpc.private_route_table_ids[count.index]

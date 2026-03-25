@@ -9,3 +9,7 @@ output "privates_sg_id" {
 output "nat_sg_id" {
   value = aws_security_group.nat.id
 }
+
+output "alb_sg_id" {
+  value = aws_security_group.load_balancer.id
+}

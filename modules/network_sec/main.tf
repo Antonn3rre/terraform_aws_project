@@ -44,6 +44,14 @@ resource "aws_security_group" "private_ssh" {
     description     = "SSH from bastion host only"
   }
 
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    security_groups = [aws_security_group.load_balancer.id]
+    description = "Inbound traffic to web server"
+  }
+
   # for ping
   ingress {
     from_port   = -1
@@ -57,7 +65,7 @@ resource "aws_security_group" "private_ssh" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow all outbound traffic for NAT"
+    description = "Allow all outbound traffic"
   }
 
   tags = {
@@ -92,5 +100,25 @@ resource "aws_security_group" "nat" {
     to_port = 0
     cidr_blocks = ["0.0.0.0/0"] # Everything that go to the internet
     protocol = "-1" # Authorize all protocols
+  }
+}
+
+resource "aws_security_group" "load_balancer" {
+  name_prefix = "${var.project_name}-load_balancer-"
+  vpc_id = var.vpc_id
+  description = "Security group for load balancer"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Everything
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+    protocol = "-1"
   }
 }
