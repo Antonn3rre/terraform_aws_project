@@ -8,20 +8,22 @@ module "compute" {
   privates_sg_id = module.network_sec.privates_sg_id
   nat_sg_id = module.network_sec.nat_sg_id
   vpc_cidr = module.vpc.vpc_cidr
+  project_name = var.project_name
 }
   # module.vpc.public_subnets[0]
 
 module "network_sec" {
   source = "../modules/network_sec"
-  project_name = "Test"
   vpc_id = module.vpc.vpc_id
   allowed_ssh_cidrs = var.allowed_ssh_cidrs
   vpc_cidr = module.vpc.vpc_cidr
+  project_name = var.project_name
 }
 
 module "vpc" {
   source = "../modules/vpc"
   aws_availability_zones_names = data.aws_availability_zones.available.names
+  project_name = var.project_name
 }
 
 module "alb" {
@@ -30,6 +32,7 @@ module "alb" {
   public_subnets = module.vpc.public_subnets
   vpc_id = module.vpc.vpc_id
   private_instances_ids = module.compute.private_instances_ids
+  project_name = var.project_name
 }
 
 resource "aws_route" "private_nat_route" {

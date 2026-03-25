@@ -16,3 +16,6 @@ output "nat_private_ip" {
 output "alb_url" {
   value = module.alb.alb_url
 }
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}

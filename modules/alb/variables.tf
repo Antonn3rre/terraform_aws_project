@@ -11,3 +11,7 @@ variable "private_instances_ids" {
   type =  list(string)
 }
 
+variable "project_name" {
+  type = string
+  description = "Projet name"
+}

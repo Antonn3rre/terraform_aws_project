@@ -53,6 +53,10 @@ variable "nat_sg_id" {
 variable "vpc_cidr" {
   type = string
 }
+variable "project_name" {
+  type = string
+  description = "Projet name"
+}
 /*
 variable "private_instances_sg_id" {
   type = list(string)

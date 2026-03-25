@@ -11,7 +11,6 @@ variable "allowed_ssh_cidrs" {
 variable "project_name" {
   type = string
   description = "Projet name"
-  default = "VPC AWS Terraform"
 }
 
 variable "vpc_cidr" {

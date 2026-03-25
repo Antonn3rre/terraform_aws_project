@@ -8,3 +8,7 @@ variable "aws_availability_zones_names" {
   type        = list(string)
   description = "List of AZ names passed from root"
 }
+variable "project_name" {
+  type = string
+  description = "Projet name"
+}
