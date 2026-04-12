@@ -1,10 +1,17 @@
-.terraform/
-terraform.tfstate
-terraform.tfstate.backup
+
+# Terraform
+
+**/.terraform/*
 *.tfstate
-*.tfstate.backup
-
+*.tfstate.*
 *.tfvars
+infra/live/plan
 *.tfvars.json
-
 *.log
+
+# Python
+**/__pycache__/
+.venv/
+
+# Docker
+.docker/

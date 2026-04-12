@@ -57,3 +57,36 @@ Depuis une instance privée, testez la connectivité vers l'extérieur :
 
 ---
 ⚠️ Important : Lancez terraform destroy après vos tests pour éviter des frais inutiles.
+
+
+
+# APP
+
+## ETAPE 1: Creer Dockerfile
+
+1. On cree le Dockerfile en partant d'une image python afin d'installer tous les packages necessaires dans un dossier precis.
+2. On cree ensuite notre image finale a partir d'une image la plus petite possile (distroless) pour n'y copier que les packages installes + fichiers necessaires
+/!\ Voir si  ca n'est pas necessaire d'installer un shell pour le debug
+/!\ pas de distroless pour le moment, necessite d'installer beaucoup de librairies supp, a voir plus tard
+3. Lancer le script (main.py) qui demarre et configure notre serveur
+
+## ETAPE 2: Creer requirements.txt
+
+1. Creer un environnement virtuel
+`python3 -m venv .venv; source .venv/bin/activate`
+2. Installer le/les package(s) necessaire(s)
+`pip install fastapi uvicorn`
+3. En extraire le fichier requirements
+`pip freeze > requirements.txt`
+
+## ETAPE 3: Creer main.py
+
+Lancer le serveur
+`uvicorn main:app`
+
+## ETAPE 4: Creer script check
+
+Infos a check dans le Dockerfile:
+- Pas d'utilisation d'image latest
+- Defini un user qui ne soit pas root
+
