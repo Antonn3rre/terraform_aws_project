@@ -1,0 +1,26 @@
+name : CI Security Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Docker Security Linter
+        run: |
+          # On se deplace dans le dossier app car le script cherche "Dockerfile" localement
+          cd app
+          python security_check.py
